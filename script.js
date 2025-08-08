@@ -1119,8 +1119,8 @@ function displayProducts(products) {
             formattedPrice = `${symbol}${convertedPrice.toFixed(2)}`;
         }
         
-        // Use agent link
-        const productLink = product.rawlink || product.link || '#';
+        // Use original link for display, affiliate link will be handled by click events
+        const productLink = product.link || product.rawlink || '#';
 
         productElement.innerHTML = `
             <div class="product-container">
@@ -1131,7 +1131,7 @@ function displayProducts(products) {
                         <path d="M12 17h.01"></path>
                     </svg>
                 </button>
-                <a href="${productLink}" class="product-image" target="_blank" rel="noopener noreferrer">
+                <a href="#" class="product-image" target="_blank" rel="noopener noreferrer" data-product-id="${product._id}">
                     <img src="${product.image}" alt="${product.name}" loading="lazy">
                 </a>
             </div>
@@ -1153,19 +1153,42 @@ function displayProducts(products) {
             const agent = localStorage.getItem('agent') || 'kakobuy';
             // Najdi produkt podle id
             const product = window.allProducts.find(p => p._id === productId || p.id === productId);
-            if (!product || !product.rawlink) return;
+            if (!product || !product.link) return;
 
             // Zavolej API pro konverzi odkazu
             try {
-                const apiUrl = `https://affiliate.repsheet.net/convert?link=${encodeURIComponent(product.rawlink)}`;
+                const apiUrl = `https://affiliate.repsheet.net/convert?link=${encodeURIComponent(product.link)}`;
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                let affiliateLink = data[agent] || data.kakobuy || product.rawlink;
-                affiliateLink += '/dexikos';
+                let affiliateLink = data[agent] || data.kakobuy || product.link;
                 window.open(affiliateLink, '_blank', 'noopener,noreferrer');
             } catch (err) {
                 // Fallback: otevři rawlink
-                window.open(product.rawlink, '_blank', 'noopener,noreferrer');
+                window.open(product.link, '_blank', 'noopener,noreferrer');
+            }
+        });
+    });
+    
+    // Add click event listeners to product images
+    document.querySelectorAll('.product-image').forEach(link => {
+        link.addEventListener('click', async function(e) {
+            e.preventDefault();
+            const productId = this.getAttribute('data-product-id');
+            const agent = localStorage.getItem('agent') || 'kakobuy';
+            // Najdi produkt podle id
+            const product = window.allProducts.find(p => p._id === productId || p.id === productId);
+            if (!product || !product.link) return;
+
+            // Zavolej API pro konverzi odkazu
+            try {
+                const apiUrl = `https://affiliate.repsheet.net/convert?link=${encodeURIComponent(product.link)}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                let affiliateLink = data[agent] || data.kakobuy || product.link;
+                window.open(affiliateLink, '_blank', 'noopener,noreferrer');
+            } catch (err) {
+                // Fallback: otevři rawlink
+                window.open(product.link, '_blank', 'noopener,noreferrer');
             }
         });
     });
