@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Fetch products from the API instead of items.json
     console.log('Fetching products from API...');
-    fetch('https://api.dexfinds.com/db/ali')
+    fetch('https://api.dexfinds.com/db/dex')
         .then(response => {
             console.log('API Response status:', response.status);
             console.log('API Response headers:', response.headers);
@@ -1120,7 +1120,7 @@ function displayProducts(products) {
         }
         
         // Use agent link
-        const productLink = getAgentLink(product);
+        const productLink = product.rawlink || product.link || '#';
 
         productElement.innerHTML = `
             <div class="product-container">
