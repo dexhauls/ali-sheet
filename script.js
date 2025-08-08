@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Fetch products from the API instead of items.json
     console.log('Fetching products from API...');
-    fetch('https://api.dexfinds.com/db/dex')
+    fetch('https://api.dexfinds.com/db/ali')
         .then(response => {
             console.log('API Response status:', response.status);
             console.log('API Response headers:', response.headers);
