@@ -1145,6 +1145,7 @@ function displayProducts(products) {
         productsGrid.appendChild(productElement);
     });
     
+    // Add click event listeners AFTER all products are added to DOM
     // Add click event listeners to checkout buttons
     document.querySelectorAll('.checkout-btn').forEach(button => {
         button.addEventListener('click', async function(e) {
