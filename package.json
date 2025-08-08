@@ -1,0 +1,16 @@
+{
+  "name": "ali-sheet",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^7.0.6"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}

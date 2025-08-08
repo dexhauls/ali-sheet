@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dex Finds FAQ </title>
+    <link rel="icon" href="../icon.png" type="image/png">
+    <meta name="description" content="Find answers to common questions about shopping from Taobao, Weidian and 1688 through Dex Hauls. Learn about shipping, quality, returns and more.">
+    <meta name="keywords" content="dex hauls faq, taobao faq, weidian faq, 1688 shopping, chinese marketplace, shipping information, returns policy">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Helvetica LT Std Bold font -->
+    <link href="https://db.onlinewebfonts.com/c/52fc208e73504d98d1c9c520e3fc22a5?family=HelveticaLTStd-Bold" rel="stylesheet">
+    <!-- Helvetica LT Std Regular font -->
+    <link href="https://db.onlinewebfonts.com/c/30b27b12d670f296957a27296c5bcbc7?family=HelveticaLTStd" rel="stylesheet">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dex Hauls FAQ - Frequently Asked Questions About Chinese Marketplace Shopping">
+    <meta property="og:description" content="Find answers to common questions about shopping from Taobao, Weidian and 1688 through Dex Hauls. Learn about shipping, quality, returns and more.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Dex Hauls FAQ - Frequently Asked Questions About Chinese Marketplace Shopping">
+    <meta property="twitter:description" content="Find answers to common questions about shopping from Taobao, Weidian and 1688 through Dex Hauls. Learn about shipping, quality, returns and more.">
+    
+    <!-- Structured Data - FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Who owns and manages this website?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This website is owned and managed by @dex_hauls on Discord. For any inquiries, you can contact via Discord or email at dexhauls@icloud.com."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often do you add new finds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every day! Follow the page so you don't miss anything."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why buy alternatives instead of retail?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You get the same thing for a fraction of the price, and you'll barely notice the difference."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it legal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Purchasing is 100% legal in the Czech Republic and Slovakia. Selling is a different matter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are these items 1:1 with the original?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No copy is perfectly identical; there's always some detail. But usually, nobody notices."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are there multiple versions of one product?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Different factories = different qualities. Some versions are better than others."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I return an item if I'm not satisfied?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, but only while it's still in the warehouse. Once you have it at home, returns are not possible."
+          }
+        }
+      ]
+    }
+    </script>
+    <style>
+        /* FAQ-specific styles */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .faq-title {
+            font-family: 'HelveticaLTStd-Bold', 'Helvetica', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .faq-item {
+            border: 1px solid #333;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            font-family: 'HelveticaLTStd-Bold', 'Helvetica', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question:after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .faq-item.active .faq-question:after {
+            content: '−';
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-family: 'HelveticaLTStd', 'Helvetica', sans-serif;
+            line-height: 1.6;
+            font-size: 1rem;
+            padding: 0 20px;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 20px 20px;
+        }
+        
+        .disclaimer {
+            margin-top: 60px;
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            font-size: 0.85rem;
+            color: #999;
+            line-height: 1.6;
+        }
+        
+        .disclaimer p {
+            margin-bottom: 15px;
+        }
+        
+        .disclaimer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 40px;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'HelveticaLTStd-Bold', 'Helvetica', sans-serif;
+            border: 1px solid #fff;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .back-to-home:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 30px 15px;
+            }
+            
+            .faq-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <rect y="7" width="30" height="3" fill="white"/>
+                <rect y="14" width="30" height="3" fill="white"/>
+                <rect y="21" width="30" height="3" fill="white"/>
+            </svg>
+        </button>
+        <div class="logo">
+            <h1><a href="../index.html" style="color: inherit; text-decoration: none; min-width: 180px; display: inline-block;">DEX FINDS</a></h1>
+        </div>
+        <div class="top-right">
+            <div class="dropdown-container">
+                <button class="currency-btn">
+                    <span class="currency-symbol">€</span>
+                    <span class="currency-text">EUR</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-icon">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="dropdown-menu currency-menu">
+                    <div class="dropdown-item" data-currency="EUR" data-symbol="€">EUR</div>
+                    <div class="dropdown-item" data-currency="USD" data-symbol="$">USD</div>
+                    <div class="dropdown-item" data-currency="CZK" data-symbol="Kč">CZK</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="faq-container">
+        <h1 class="faq-title">Frequently Asked Questions</h1>
+        
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question" style="font-weight: bold; color: #ffcc00;">Who owns and manages this website?</div>
+                <div class="faq-answer">
+                    <p style="font-weight: 500; font-size: 1.1rem;"><strong>This website is owned and managed by @dex_hauls on Discord.</strong> For any inquiries, you can contact directly via Discord or email at <a href="mailto:dexhauls@icloud.com" style="color: #ffcc00; font-weight: bold;">dexhauls@icloud.com</a></p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">How often do you add new finds?</div>
+                <div class="faq-answer">
+                    <p>Every day! Follow the page so you don't miss anything.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Why buy alternatives instead of retail?</div>
+                <div class="faq-answer">
+                    <p>You get the same thing for a fraction of the price, and you'll barely notice the difference.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Is it legal?</div>
+                <div class="faq-answer">
+                    <p>Purchasing is 100% legal in the Czech Republic and Slovakia. Selling is a different matter.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are these items 1:1 with the original?</div>
+                <div class="faq-answer">
+                    <p>No copy is perfectly identical; there's always some detail. But usually, nobody notices.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Why are there multiple versions of one product?</div>
+                <div class="faq-answer">
+                    <p>Different factories = different qualities. Some versions are better than others. Not sure which one to choose? Join our <a href="https://discord.gg/dexhauls">Discord</a> and we'll help you out.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I return an item if I'm not satisfied?</div>
+                <div class="faq-answer">
+                    <p>Yes, but only while it's still in the warehouse. Once you have it at home, returns are not possible.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <p>This page does not sell any products; it only shares information and links to publicly available offers from third parties. We are not responsible for the quality, availability, or delivery of the listed products. All purchases are at the buyer's own risk.</p>
+            
+            <p>The use of this page is fully compliant with applicable laws. We do not support, sell, or store any products. All information provided here is for educational and informational purposes only.</p>
+            
+        </div>
+        
+        <a href="../index.html" class="back-to-home">Back to Home</a>
+    </div>
+    
+    <footer class="footer-credits">
+        Website owned by <strong>@dex_hauls</strong> (Discord) | Contact: <a href="mailto:dexhauls@icloud.com">dexhauls@icloud.com</a> | Designed by ownage.tech</a>
+    </footer>
+    
+    <!-- Back to top button -->
+    <button class="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+    
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize back-to-top button
+            initBackToTopButton();
+            
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                // Create overlay element
+                const overlay = document.createElement('div');
+                overlay.className = 'menu-overlay';
+                document.body.appendChild(overlay);
+                
+                // Toggle menu when hamburger icon is clicked
+                menuToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('menu-open');
+                    overlay.classList.toggle('active');
+                    // Redirect to main page with menu open indicator
+                    window.location.href = '../index.html?menu=open';
+                });
+            }
+            
+            // FAQ Toggle Functionality
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Currency selector functionality
+            const currencyBtns = document.querySelectorAll('.currency-btn');
+            currencyBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    const dropdown = this.closest('.dropdown-container').querySelector('.dropdown-menu');
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.querySelectorAll('.currency-menu .dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const currency = this.getAttribute('data-currency');
+                    const symbol = this.getAttribute('data-symbol');
+                    
+                    // Update UI
+                    document.querySelector('.currency-symbol').textContent = symbol;
+                    document.querySelector('.currency-text').textContent = currency;
+                    
+                    // Close dropdown
+                    document.querySelector('.currency-menu').classList.remove('active');
+                    
+                    // Store in localStorage
+                    localStorage.setItem('currency', currency);
+                    localStorage.setItem('currencySymbol', symbol);
+                });
+            });
+            
+            // Initialize currency from localStorage
+            const storedCurrency = localStorage.getItem('currency') || 'EUR';
+            const storedSymbol = localStorage.getItem('currencySymbol') || '€';
+            
+            document.querySelector('.currency-symbol').textContent = storedSymbol;
+            document.querySelector('.currency-text').textContent = storedCurrency;
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.dropdown-container')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('active');
+                    });
+                }
+            });
+        });
+        
+        // Initialize back-to-top button functionality
+        function initBackToTopButton() {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (!backToTopButton) return;
+            
+            // Show button when scrolling down
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            // Scroll to top when clicked
+            backToTopButton.addEventListener('click', () => {
+                // Smooth scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+</body>
+</html> 

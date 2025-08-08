@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dex's Links</title>
+    <link rel="icon" href="https://db.repsheet.net/storage/v1/object/public/upload//cat-with-wry-smile_1f63c.png" type="image/png">
+    
+    <!-- OpenGraph / Social Media Metadata -->
+    <meta property="og:title" content="Dex's Links">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dex's Links">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Geist-Regular', 'sans-serif'],
+                    },
+                    colors: {
+                        border: "hsl(0 0% 14.9%)",
+                        input: "hsl(0 0% 14.9%)",
+                        ring: "hsl(0 0% 83.1%)",
+                        background: "hsl(0 0% 0%)",
+                        foreground: "hsl(0 0% 98%)",
+                        primary: {
+                            DEFAULT: "hsl(0 0% 98%)",
+                            foreground: "hsl(0 0% 9%)",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(0 0% 9%)",
+                            foreground: "hsl(0 0% 98%)",
+                        },
+                        card: {
+                            DEFAULT: "hsl(0 0% 3.9%)",
+                            foreground: "hsl(0 0% 98%)",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(0 0% 14.9%)",
+                            foreground: "hsl(0 0% 63.9%)",
+                        },
+                    },
+                    borderRadius: {
+                        lg: 'var(--radius)',
+                        md: 'calc(var(--radius) - 2px)',
+                        sm: 'calc(var(--radius) - 4px)',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            from: { opacity: 0, transform: 'translateY(10px)' },
+                            to: { opacity: 1, transform: 'translateY(0)' }
+                        },
+                        bounce: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        gradientMove: {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                            '100%': { backgroundPosition: '0% 50%' }
+                        }
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.5s ease-in-out forwards',
+                        bounce: 'bounce 2s ease-in-out infinite',
+                        gradientBg: 'gradientMove 15s ease infinite'
+                    },
+                    transitionProperty: {
+                        'height': 'height',
+                        'spacing': 'margin, padding',
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Geist-Regular';
+            src: url('/Geist-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        :root {
+            --radius: 0.5rem;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .page-gradient {
+            background: linear-gradient(to bottom, #000000, #121212);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0.7;
+            animation: float 2s ease-in-out infinite;
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        * {
+            font-family: 'Geist-Regular', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .glow:hover {
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+        }
+        
+        .premium-tag {
+            background: linear-gradient(90deg, #3b82f6, #6366f1);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground min-h-screen flex flex-col items-center p-6 md:p-8">
+    <div class="page-gradient"></div>
+    <div class="container max-w-md w-full mx-auto space-y-8 animate-fadeIn">
+        <!-- Profile Section - Reorganized with image left, info right -->
+        <div class="flex flex-row items-center justify-start space-x-4 md:space-x-5 px-1">
+            <!-- Profile Image -->
+            <div class="relative h-24 w-24 md:h-28 md:w-28 rounded-full overflow-hidden border-4 border-white/20 shadow-xl flex-shrink-0">
+                <img class="h-full w-full object-cover" src="https://cdn.beacons.ai/user_content/mZkuEVDOJyR54koOPqx2EsLdcQD3/profile_dexik.png?t=1727634176921" alt="Profile Picture">
+            </div>
+            
+            <!-- Name and Social Icons -->
+            <div class="flex flex-col space-y-3">
+                <h1 class="text-2xl md:text-3xl font-bold tracking-wide uppercase">@dexhauls</h1>
+                
+                <!-- Social Icons Row -->
+                <div class="flex space-x-3">
+                    <a href="https://tiktok.com/@dex.hauls" class="w-8 h-8 flex items-center justify-center rounded-full bg-card border border-border text-muted-foreground hover:text-white hover:bg-muted transition-colors duration-300">
+                        <i class="fab fa-tiktok text-sm"></i>
+                    </a>
+                    <a href="https://instagram.com/dex_hauls" class="w-8 h-8 flex items-center justify-center rounded-full bg-card border border-border text-muted-foreground hover:text-white hover:bg-muted transition-colors duration-300">
+                        <i class="fab fa-instagram text-sm"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@Dex_hauls" class="w-8 h-8 flex items-center justify-center rounded-full bg-card border border-border text-muted-foreground hover:text-white hover:bg-muted transition-colors duration-300">
+                        <i class="fab fa-youtube text-sm"></i>
+                    </a>
+                    <a href="https://discord.gg/dexhauls" class="w-8 h-8 flex items-center justify-center rounded-full bg-card border border-border text-muted-foreground hover:text-white hover:bg-muted transition-colors duration-300">
+                        <i class="fab fa-discord text-sm"></i>
+                    </a>
+                    <a href="https://telegram.openinapp.co/dex" class="w-8 h-8 flex items-center justify-center rounded-full bg-card border border-border text-muted-foreground hover:text-white hover:bg-muted transition-colors duration-300">
+                        <i class="far fa-envelope text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Video Section -->
+        <div class="w-full bg-card border border-border rounded-md overflow-hidden shadow-lg glow">
+            <iframe 
+                class="w-full aspect-video" 
+                src="https://www.youtube.com/embed/g-cBsvKGC8Q" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+        <!-- Links Section -->
+        <div class="space-y-3 mt-4">
+            <!-- Registration Link - High Contrast -->
+            <a href="https://ikako.vip/r/dexikos" class="relative group block">
+                <div class="absolute inset-0 bg-primary rounded-md transition-all duration-300 transform group-hover:scale-[1.02]"></div>
+                <div class="relative p-4 rounded-md bg-gradient-to-br from-white to-gray-100 text-black border-2 border-white shadow-lg hover:shadow-xl transition-all duration-300">
+                    <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                        Limited Time
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <h2 class="text-lg font-bold uppercase tracking-wider" data-translate="kakobuy_title">Kakobuy Registration</h2>
+                        <p class="text-sm text-gray-700 mt-1" data-translate="kakobuy_desc">Register to get <span class="text-red-400">$410</span> in shipping coupons</p>
+                        <span class="mt-2 bg-black text-white text-sm font-medium px-3 py-1 rounded" data-translate="kakobuy_coupon">Use code "dexikos" to get $15 balance</span>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- Standard Links -->
+            <a href="https://dexfinds.com/" class="block p-4 bg-card hover:bg-muted border-2 border-white/20 rounded-md shadow-lg transition-all duration-300 hover:shadow-xl glow">
+                <div class="flex flex-col items-center">
+                    <h2 class="text-lg font-bold uppercase tracking-wide" data-translate="dexfinds_title">Dexfinds.com</h2>
+                    <p class="text-sm text-muted-foreground mt-1" data-translate="dexfinds_desc">Spreadsheet but <span class="text-red-400">better</span></p>
+                </div>
+            </a>
+            
+            <a href="https://nasneakers.com/" class="block p-3 bg-card hover:bg-muted border border-border rounded-md shadow transition-all duration-300 hover:shadow-md glow">
+                <div class="flex flex-col items-center">
+                    <h2 class="text-base font-semibold uppercase tracking-wide" data-translate="nasneakers_title">NAsneakers</h2>
+                    <span class="mt-2 bg-muted text-white text-xs font-medium px-2 py-1 rounded" data-translate="nasneakers_coupon">Use coupon "dex" for 15% discount</span>
+                </div>
+            </a>
+
+            <a href="https://discord.gg/dexhauls" class="block p-3 bg-card hover:bg-muted border border-border rounded-md shadow transition-all duration-300 hover:shadow-md glow">
+                <div class="flex flex-col items-center">
+                    <h2 class="text-base font-semibold uppercase tracking-wide" data-translate="discord_title">Discord Server</h2>
+                    <p class="text-xs text-muted-foreground mt-1" data-translate="discord_desc">Join our community</p>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 text-xs pt-2 pb-2">
+            &copy; 2025 <span data-translate="footer">Dex's Links - All Rights Reserved</span>
+        </footer>
+    </div>
+
+    <script>
+        // Translation object
+        const translations = {
+            en: {
+                title: "Dex's Links",
+                kakobuy_title: "Kakobuy Registration",
+                kakobuy_desc: "Register to get <span class=\"text-red-400\">$410</span> in shipping coupons",
+                kakobuy_coupon: "Use code \"dex\" to get $15 balance",
+                dexfinds_title: "Dexfinds.com",
+                dexfinds_desc: "Spreadsheet but <span class=\"text-red-400\">better</span>",
+                rareFinds_title: "Rare Finds",
+                rareFinds_desc: "Join our community for updates and support",
+                nasneakers_title: "NAsneakers",
+                nasneakers_coupon: "Use code \"dex\" for 15% discount",
+                discord_title: "Discord Server",
+                discord_desc: "Join our community",
+                footer: "Dex Finds - All Rights Reserved"
+            },
+            cz: {
+                title: "Socails etc.",
+                kakobuy_title: "Registrace na Kakobuy",
+                kakobuy_desc: "Zaregistruj se a získej <span class=\"text-red-400\">$410</span> v kupónech",
+                kakobuy_coupon: "Použij kód \"dex\" pro 15$ slevu na dopravu",
+                dexfinds_title: "Dexfinds.com",
+                dexfinds_desc: "Spreadsheet ale <span class=\"text-red-400\">lepší</span>",
+                nasneakers_title: "NAsneakers",
+                nasneakers_coupon: "Použij kupón \"dex\" pro 15% slevu",
+                discord_title: "Discord Server",
+                discord_desc: "Připoj se k naší komunitě",
+                footer: "Dex Finds - All Rights Reserved"
+            }
+        };
+
+        // Function to get language from URL
+        function getLanguage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.has('cz') ? 'cz' : 'en';
+        }
+
+        // Function to translate content
+        function translateContent() {
+            const lang = getLanguage();
+            const t = translations[lang];
+
+            // Update title
+            document.title = t.title;
+
+            // Update content using data attributes
+            document.querySelector('[data-translate="kakobuy_title"]').textContent = t.kakobuy_title;
+            document.querySelector('[data-translate="kakobuy_desc"]').innerHTML = t.kakobuy_desc;
+            document.querySelector('[data-translate="kakobuy_coupon"]').textContent = t.kakobuy_coupon;
+            document.querySelector('[data-translate="dexfinds_title"]').textContent = t.dexfinds_title;
+            document.querySelector('[data-translate="dexfinds_desc"]').innerHTML = t.dexfinds_desc;
+            document.querySelector('[data-translate="rareFinds_title"]').textContent = t.rareFinds_title;
+            document.querySelector('[data-translate="rareFinds_desc"]').textContent = t.rareFinds_desc;
+            document.querySelector('[data-translate="nasneakers_title"]').textContent = t.nasneakers_title;
+            document.querySelector('[data-translate="nasneakers_coupon"]').textContent = t.nasneakers_coupon;
+            document.querySelector('[data-translate="oldSheet_title"]').textContent = t.oldSheet_title;
+            document.querySelector('[data-translate="oldSheet_desc"]').innerHTML = t.oldSheet_desc;
+            document.querySelector('[data-translate="discord_title"]').textContent = t.discord_title;
+            document.querySelector('[data-translate="discord_desc"]').textContent = t.discord_desc;
+            document.querySelector('[data-translate="footer"]').textContent = t.footer;
+        }
+
+        // Initialize translation on page load
+        document.addEventListener('DOMContentLoaded', translateContent);
+    </script>
+</body>
+</html>

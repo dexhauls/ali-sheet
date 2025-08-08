@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ali Gallery</title>
+    <link rel="icon" href="icon.png" type="image/png">
+    <meta name="description" content="Discover how to shop easily from Chinese marketplaces Taobao, Weidian and 1688 with Dex Hauls. Find alternative fashion products at affordable prices.">
+    <meta name="keywords" content="dex hauls, taobao, weidian, 1688, chinese marketplace, alternative fashion, affordable alternatives, branded replicas, fashion apparel">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dex Hauls - Shop from Chinese marketplace Taobao, Weidian and 1688 with ease">
+    <meta property="og:description" content="Discover how to shop easily from Chinese marketplaces Taobao, Weidian and 1688 with Dex Hauls. Find alternative fashion products at affordable prices.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Dex Hauls - Shop from Chinese marketplace Taobao, Weidian and 1688 with ease">
+    <meta property="twitter:description" content="Discover how to shop easily from Chinese marketplaces Taobao, Weidian and 1688 with Dex Hauls. Find alternative fashion products at affordable prices.">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Helvetica LT Std Bold font -->
+    <link href="https://db.onlinewebfonts.com/c/52fc208e73504d98d1c9c520e3fc22a5?family=HelveticaLTStd-Bold" rel="stylesheet">
+    <!-- Helvetica LT Std Regular font -->
+    <link href="https://db.onlinewebfonts.com/c/30b27b12d670f296957a27296c5bcbc7?family=HelveticaLTStd" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Dex Hauls",
+      "description": "Shop from Chinese marketplace Taobao, Weidian and 1688 with ease",
+      "url": "https://dexhauls.com"
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <rect y="7" width="30" height="3" fill="white"/>
+                <rect y="14" width="30" height="3" fill="white"/>
+                <rect y="21" width="30" height="3" fill="white"/>
+            </svg>
+        </button>
+        <div class="logo">
+            <h1 style="min-width: 180px;">ALI GALLERY</h1>
+        </div>
+        <div class="top-right">
+            <div class="dropdown-container">
+                <button class="currency-btn" aria-label="Change currency">
+                    <span class="currency-symbol">€</span>
+                    <span class="currency-text">EUR</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-icon" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="dropdown-menu currency-menu" role="menu" aria-hidden="true">
+                    <div class="dropdown-item" data-currency="EUR" data-symbol="€" role="menuitem">EUR</div>
+                    <div class="dropdown-item" data-currency="USD" data-symbol="$" role="menuitem">USD</div>
+                    <div class="dropdown-item" data-currency="CZK" data-symbol="Kč" role="menuitem">CZK</div>
+                </div>
+            </div>
+            
+            <div class="dropdown-container">
+                <button class="agent-btn" id="agent-dropdown-btn" aria-label="Select agent">
+                    <span class="agent-selected">KakoBuy</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-icon" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="dropdown-menu agent-menu" id="agent-dropdown-menu" role="menu" aria-hidden="true">
+                    <div class="dropdown-item agent-option" data-agent="kakobuy" role="menuitem">KakoBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="superbuy" role="menuitem">Superbuy</div>
+                    <div class="dropdown-item agent-option" data-agent="basetao" role="menuitem">Basetao</div>
+                    <div class="dropdown-item agent-option" data-agent="mulebuy" role="menuitem">Mulebuy</div>
+                    <div class="dropdown-item agent-option" data-agent="joyagoo" role="menuitem">Joyagoo</div>
+                    <div class="dropdown-item agent-option" data-agent="cnfans" role="menuitem">CNFans</div>
+                    <div class="dropdown-item agent-option" data-agent="acbuy" role="menuitem">ACBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="eastmallbuy" role="menuitem">EastmallBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="orientdig" role="menuitem">OrientDig</div>
+                    <div class="dropdown-item agent-option" data-agent="sifubuy" role="menuitem">SifuBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="loongbuy" role="menuitem">LoongBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="itaobuy" role="menuitem">ITaoBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="lovegobuy" role="menuitem">LoveGoBuy</div>
+                    <div class="dropdown-item agent-option" data-agent="oopbuy" role="menuitem">OopBuy</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav aria-label="Main Navigation">
+                <ul>
+                    <li>
+                        
+                        <a href="https://ikako.vip/dexikos" class="kakobuy-register">Register on KakoBuy</a>
+                    </li>
+                    <li class="divider" role="separator"></li>
+                    
+                    <li class="sidebar-heading">Filters</li>
+                    <li class="search-container">
+                        <input type="text" class="search-input" placeholder="Search..." aria-label="Search products">
+                    </li>
+                    <li class="categories-container">
+                        <!-- Categories will be dynamically loaded here -->
+                    </li>
+                    <li class="divider" role="separator"></li>
+                    
+                    <li class="sidebar-heading">Pages</li>
+                    <li class="nav-item"><a href="https://www.youtube.com/@Dex_hauls">Tutorial</a></li>
+                    <li class="nav-item"><a href="/faq/index.html">FAQ</a></li>
+                    <li class="nav-item"><a href="/tracking/index.html">Tracking</a></li>
+                    <li class="nav-item"><a href="/sellers/index.html">Sellers</a></li>
+                    <li class="divider" role="separator"></li>
+                    
+                    <li class="sidebar-heading">Socials</li>
+                    <li class="nav-item">
+                        <a href="https://www.instagram.com/dex_hauls/" class="social-link">
+                            <span class="icon-wrapper"><img width="16" height="16" src="icons/icons8-insta-100.png" alt="Instagram" class="social-icon"/></span>
+                            Instagram
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.tiktok.com/@dex.hauls" class="social-link">
+                            <span class="icon-wrapper"><img width="16" height="16" src="icons/icons8-tiktok-100.png" alt="TikTok" class="social-icon"/></span>
+                            TikTok
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://discord.gg/692z6qzkea" class="social-link">
+                            <span class="icon-wrapper"><img width="16" height="16" src="icons/icons8-discord-100.png" alt="Discord" class="social-icon"/></span>
+                            Discord
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.youtube.com/@Dex_hauls" class="social-link">
+                            <span class="icon-wrapper"><img width="16" height="16" src="icons/icons8-youtube-100.png" alt="YouTube" class="social-icon"/></span>
+                            YouTube
+                        </a>
+                    </li>
+                    <li class="divider" role="separator"></li>
+                    
+                    <!-- Mobile Agent Selection -->
+                    <li class="mobile-agent-container">
+                        <label style="font-size:13px;font-weight:500;margin-bottom:8px;display:block;">Agent:</label>
+                        <div class="mobile-agent-dropdown">
+                            <button class="mobile-agent-btn" id="mobile-agent-dropdown-btn" aria-label="Select agent">
+                                <span class="mobile-agent-selected">KakoBuy</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-icon">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            <div class="mobile-agent-dropdown-menu" id="mobile-agent-dropdown-menu" role="menu" aria-hidden="true">
+                                <div class="mobile-agent-option" data-agent="kakobuy" role="menuitem">KakoBuy</div>
+                                <div class="mobile-agent-option" data-agent="superbuy" role="menuitem">Superbuy</div>
+                                <div class="mobile-agent-option" data-agent="basetao" role="menuitem">Basetao</div>
+                                <div class="mobile-agent-option" data-agent="mulebuy" role="menuitem">Mulebuy</div>
+                                <div class="mobile-agent-option" data-agent="joyagoo" role="menuitem">Joyagoo</div>
+                                <div class="mobile-agent-option" data-agent="cnfans" role="menuitem">CNFans</div>
+                                <div class="mobile-agent-option" data-agent="acbuy" role="menuitem">ACBuy</div>
+                                <div class="mobile-agent-option" data-agent="eastmallbuy" role="menuitem">EastmallBuy</div>
+                                <div class="mobile-agent-option" data-agent="orientdig" role="menuitem">OrientDig</div>
+                                <div class="mobile-agent-option" data-agent="sifubuy" role="menuitem">SifuBuy</div>
+                                <div class="mobile-agent-option" data-agent="loongbuy" role="menuitem">LoongBuy</div>
+                                <div class="mobile-agent-option" data-agent="itaobuy" role="menuitem">ITaoBuy</div>
+                                <div class="mobile-agent-option" data-agent="lovegobuy" role="menuitem">LoveGoBuy</div>
+                                <div class="mobile-agent-option" data-agent="oopbuy" role="menuitem">OopBuy</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="products-grid" aria-label="Products">
+            <!-- Products will be dynamically loaded here -->
+        </main>
+    </div>
+
+    <footer class="footer-credits">
+        Website owned by <strong>@dex_hauls</strong> (Discord) | Contact: <a href="mailto:dexhauls@icloud.com">dexhauls@icloud.com</a> | Designed by ownage.tech</a>
+    </footer>
+
+    <!-- Back to top button -->
+    <button class="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>

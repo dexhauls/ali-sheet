@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dex Finds Sellers </title>
+    <link rel="icon" href="../icon.png" type="image/png">
+    <meta name="description" content="Find trusted sellers and stores from Taobao, Weidian and Yupoo through Dex Finds. Browse our curated list of high-quality sellers for alternative fashion.">
+    <meta name="keywords" content="dex finds sellers, taobao sellers, weidian sellers, yupoo stores, chinese marketplace, alternative fashion, quality replicas">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Helvetica LT Std Bold font -->
+    <link href="https://db.onlinewebfonts.com/c/52fc208e73504d98d1c9c520e3fc22a5?family=HelveticaLTStd-Bold" rel="stylesheet">
+    <!-- Helvetica LT Std Regular font -->
+    <link href="https://db.onlinewebfonts.com/c/30b27b12d670f296957a27296c5bcbc7?family=HelveticaLTStd" rel="stylesheet">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Dex Finds Sellers - Trusted Sellers and Stores from Chinese Marketplaces">
+    <meta property="og:description" content="Find trusted sellers and stores from Taobao, Weidian and Yupoo through Dex Finds. Browse our curated list of high-quality sellers.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Dex Finds Sellers - Trusted Sellers and Stores from Chinese Marketplaces">
+    <meta property="twitter:description" content="Find trusted sellers and stores from Taobao, Weidian and Yupoo through Dex Finds. Browse our curated list of high-quality sellers.">
+    
+    <style>
+        /* Sellers page styles */
+        .sellers-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .sellers-title {
+            font-family: 'HelveticaLTStd-Bold', 'Helvetica', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .sellers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .seller-item {
+            border: 1px solid #333;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .seller-item:hover {
+            border-color: #666;
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        
+        .seller-name {
+            font-family: 'HelveticaLTStd-Bold', 'Helvetica', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .seller-link {
+            display: inline-block;
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 2px;
+            transition: all 0.2s ease;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .seller-link:hover {
+            border-bottom-color: #fff;
+        }
+        
+        .seller-categories {
+            font-family: 'HelveticaLTStd', 'Helvetica', sans-serif;
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .seller-divider {
+            height: 1px;
+            background-color: #333;
+            margin: 40px 0;
+        }
+        
+        .disclaimer {
+            margin-top: 60px;
+            border-top: 1px solid #333;
+            padding-top: 30px;
+            font-size: 0.85rem;
+            color: #999;
+            line-height: 1.6;
+        }
+        
+        .disclaimer p {
+            margin-bottom: 15px;
+        }
+        
+        .disclaimer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 40px;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'HelveticaLTStd-Bold', 'Helvetica', sans-serif;
+            border: 1px solid #fff;
+            padding: 10px 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .back-to-home:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .sellers-container {
+                padding: 30px 15px;
+            }
+            
+            .sellers-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .seller-name {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <rect y="7" width="30" height="3" fill="white"/>
+                <rect y="14" width="30" height="3" fill="white"/>
+                <rect y="21" width="30" height="3" fill="white"/>
+            </svg>
+        </button>
+        <div class="logo">
+            <h1><a href="../index.html" style="color: inherit; text-decoration: none; min-width: 180px; display: inline-block;">DEX FINDS</a></h1>
+        </div>
+        <div class="top-right">
+            <div class="dropdown-container">
+                <button class="currency-btn">
+                    <span class="currency-symbol">€</span>
+                    <span class="currency-text">EUR</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-icon">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </button>
+                <div class="dropdown-menu currency-menu">
+                    <div class="dropdown-item" data-currency="EUR" data-symbol="€">EUR</div>
+                    <div class="dropdown-item" data-currency="USD" data-symbol="$">USD</div>
+                    <div class="dropdown-item" data-currency="CZK" data-symbol="Kč">CZK</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="sellers-container">
+        <h1 class="sellers-title">Trusted Sellers</h1>
+        
+        <div class="sellers-list">
+            <div class="seller-item">
+                <div class="seller-name">UK</div>
+                <a href="https://unionkingdom.x.yupoo.com/" class="seller-link" target="_blank">https://unionkingdom.x.yupoo.com/</a>
+                <div class="seller-categories">Represent, Blanks</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">PIKA</div>
+                <a href="https://pikachushop.x.yupoo.com/albums" class="seller-link" target="_blank">https://pikachushop.x.yupoo.com/albums</a>
+                <div class="seller-categories">1:1 Sp5der, FOG, Trapstar</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">GOAT</div>
+                <a href="https://goat-official.x.yupoo.com/" class="seller-link" target="_blank">https://goat-official.x.yupoo.com/</a>
+                <div class="seller-categories">Trapstar, Cortaiz</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">GOAT Y2K</div>
+                <a href="https://goat-official222.x.yupoo.com/" class="seller-link" target="_blank">https://goat-official222.x.yupoo.com/</a>
+                <div class="seller-categories">Minus Two, BPM, syna</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">DragonRep</div>
+                <a href="https://noghost.x.yupoo.com/" class="seller-link" target="_blank">https://noghost.x.yupoo.com/</a>
+                <div class="seller-categories">Minus Two, Y2K</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">SatanMade</div>
+                <a href="https://weidian.com/?userid=1258568610" class="seller-link" target="_blank">https://weidian.com/?userid=1258568610</a>
+                <div class="seller-categories">Balenciaga</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">AshMade</div>
+                <a href="https://weidian.com/?userid=1658217817&vc_cps_track=1459920903_0_0&spider_token=cc54" class="seller-link" target="_blank">https://weidian.com/?userid=1658217817&vc_cps_track=1459920903_0_0&spider_token=cc54</a>
+                <div class="seller-categories">Vetements</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">ALI</div>
+                <a href="https://shop1757414681.v.weidian.com/?userid=1757414681" class="seller-link" target="_blank">https://shop1757414681.v.weidian.com/?userid=1757414681</a>
+                <div class="seller-categories">Shoes</div>
+            </div>
+            
+            <div class="seller-item">
+                <div class="seller-name">100 Cent</div>
+                <a href="https://100cent.x.yupoo.com/" class="seller-link" target="_blank">https://100cent.x.yupoo.com/</a>
+                <div class="seller-categories">Shoes</div>
+            </div>
+        </div>
+        
+        <div class="disclaimer">
+            <p>This page does not sell any products; it only shares information and links to publicly available offers from third parties. We are not responsible for the quality, availability, or delivery of the listed products. All purchases are at the buyer's own risk.</p>
+            
+            <p>The use of this page is fully compliant with applicable laws. We do not support, sell, or store any products. All information provided here is for educational and informational purposes only.</p>
+        </div>
+        
+        <a href="../index.html" class="back-to-home">Back to Home</a>
+    </div>
+    
+    <footer class="footer-credits">
+        Website owned by <strong>@dex_hauls</strong> (Discord) | Contact: <a href="mailto:dexhauls@icloud.com">dexhauls@icloud.com</a> | Designed by ownage.tech</a>
+    </footer>
+    
+    <!-- Back to top button -->
+    <button class="back-to-top" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+    
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize back-to-top button
+            initBackToTopButton();
+            
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (menuToggle) {
+                // Create overlay element
+                const overlay = document.createElement('div');
+                overlay.className = 'menu-overlay';
+                document.body.appendChild(overlay);
+                
+                // Toggle menu when hamburger icon is clicked
+                menuToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('menu-open');
+                    overlay.classList.toggle('active');
+                    // Redirect to main page with menu open indicator
+                    window.location.href = '../index.html?menu=open';
+                });
+            }
+            
+            // Currency selector functionality
+            const currencyBtns = document.querySelectorAll('.currency-btn');
+            currencyBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    const dropdown = this.closest('.dropdown-container').querySelector('.dropdown-menu');
+                    dropdown.classList.toggle('active');
+                });
+            });
+            
+            document.querySelectorAll('.currency-menu .dropdown-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const currency = this.getAttribute('data-currency');
+                    const symbol = this.getAttribute('data-symbol');
+                    
+                    // Update UI
+                    document.querySelector('.currency-symbol').textContent = symbol;
+                    document.querySelector('.currency-text').textContent = currency;
+                    
+                    // Close dropdown
+                    document.querySelector('.currency-menu').classList.remove('active');
+                    
+                    // Store in localStorage
+                    localStorage.setItem('currency', currency);
+                    localStorage.setItem('currencySymbol', symbol);
+                });
+            });
+            
+            // Initialize currency from localStorage
+            const storedCurrency = localStorage.getItem('currency') || 'EUR';
+            const storedSymbol = localStorage.getItem('currencySymbol') || '€';
+            
+            document.querySelector('.currency-symbol').textContent = storedSymbol;
+            document.querySelector('.currency-text').textContent = storedCurrency;
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.dropdown-container')) {
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        menu.classList.remove('active');
+                    });
+                }
+            });
+        });
+        
+        // Initialize back-to-top button functionality
+        function initBackToTopButton() {
+            const backToTopButton = document.querySelector('.back-to-top');
+            if (!backToTopButton) return;
+            
+            // Show button when scrolling down
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            // Scroll to top when clicked
+            backToTopButton.addEventListener('click', () => {
+                // Smooth scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    </script>
+</body>
+</html> 
