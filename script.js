@@ -1147,23 +1147,35 @@ function displayProducts(products) {
     
     // Add click event listeners AFTER all products are added to DOM
     // Add click event listeners to checkout buttons
-    document.querySelectorAll('.checkout-btn').forEach(button => {
+    console.log('Adding event listeners to checkout buttons...');
+    const checkoutButtons = document.querySelectorAll('.checkout-btn');
+    console.log('Found checkout buttons:', checkoutButtons.length);
+    checkoutButtons.forEach(button => {
         button.addEventListener('click', async function(e) {
+            console.log('Checkout button clicked!');
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
+            console.log('Product ID:', productId);
             const agent = localStorage.getItem('agent') || 'kakobuy';
             // Najdi produkt podle id
             const product = window.allProducts.find(p => p._id === productId || p.id === productId);
-            if (!product || !product.link) return;
+            console.log('Found product:', product);
+            if (!product || !product.link) {
+                console.log('No product or link found');
+                return;
+            }
 
             // Zavolej API pro konverzi odkazu
             try {
                 const apiUrl = `https://affiliate.repsheet.net/convert?link=${encodeURIComponent(product.link)}`;
+                console.log('Calling API:', apiUrl);
                 const response = await fetch(apiUrl);
                 const data = await response.json();
                 let affiliateLink = data[agent] || data.kakobuy || product.link;
+                console.log('Opening affiliate link:', affiliateLink);
                 window.open(affiliateLink, '_blank', 'noopener,noreferrer');
             } catch (err) {
+                console.log('Error:', err);
                 // Fallback: otevři rawlink
                 window.open(product.link, '_blank', 'noopener,noreferrer');
             }
@@ -1171,23 +1183,35 @@ function displayProducts(products) {
     });
     
     // Add click event listeners to product images
-    document.querySelectorAll('.product-image').forEach(link => {
+    console.log('Adding event listeners to product images...');
+    const productImages = document.querySelectorAll('.product-image');
+    console.log('Found product images:', productImages.length);
+    productImages.forEach(link => {
         link.addEventListener('click', async function(e) {
+            console.log('Product image clicked!');
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
+            console.log('Product ID:', productId);
             const agent = localStorage.getItem('agent') || 'kakobuy';
             // Najdi produkt podle id
             const product = window.allProducts.find(p => p._id === productId || p.id === productId);
-            if (!product || !product.link) return;
+            console.log('Found product:', product);
+            if (!product || !product.link) {
+                console.log('No product or link found');
+                return;
+            }
 
             // Zavolej API pro konverzi odkazu
             try {
                 const apiUrl = `https://affiliate.repsheet.net/convert?link=${encodeURIComponent(product.link)}`;
+                console.log('Calling API:', apiUrl);
                 const response = await fetch(apiUrl);
                 const data = await response.json();
                 let affiliateLink = data[agent] || data.kakobuy || product.link;
+                console.log('Opening affiliate link:', affiliateLink);
                 window.open(affiliateLink, '_blank', 'noopener,noreferrer');
             } catch (err) {
+                console.log('Error:', err);
                 // Fallback: otevři rawlink
                 window.open(product.link, '_blank', 'noopener,noreferrer');
             }
