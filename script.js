@@ -1292,19 +1292,81 @@ function createAffiliateLink(product, agent) {
 // Enhanced adblock detection with multiple methods
 function detectAdblock() {
     return new Promise((resolve) => {
-        // Method 1: Test ad element
-        const testAd = document.createElement('div');
-        testAd.innerHTML = '&nbsp;';
-        testAd.className = 'adsbox';
-        testAd.style.position = 'absolute';
-        testAd.style.left = '-10000px';
-        testAd.style.top = '-1000px';
-        testAd.style.width = '1px';
-        testAd.style.height = '1px';
-        testAd.style.overflow = 'hidden';
-        document.body.appendChild(testAd);
+        console.log('🔍 Starting adblock detection...');
         
-        // Method 2: Test common ad selectors
+        // Method 1: Test ad element with common adblock class names
+        const testElements = [
+            { className: 'adsbox', id: 'adsbox-test' },
+            { className: 'advertisement', id: 'advertisement-test' },
+            { className: 'adsbygoogle', id: 'adsbygoogle-test' },
+            { className: 'ad-container', id: 'ad-container-test' },
+            { className: 'google-ad', id: 'google-ad-test' },
+            { className: 'banner-ad', id: 'banner-ad-test' }
+        ];
+        
+        let blockedCount = 0;
+        const testElementsArray = [];
+        
+        testElements.forEach((test, index) => {
+            const testElement = document.createElement('div');
+            testElement.innerHTML = '&nbsp;';
+            testElement.className = test.className;
+            testElement.id = test.id;
+            testElement.style.position = 'absolute';
+            testElement.style.left = '-10000px';
+            testElement.style.top = '-1000px';
+            testElement.style.width = '1px';
+            testElement.style.height = '1px';
+            testElement.style.overflow = 'hidden';
+            testElement.style.zIndex = '-9999';
+            document.body.appendChild(testElement);
+            testElementsArray.push(testElement);
+            
+            console.log(`Testing element ${test.className}:`, testElement.offsetHeight);
+        });
+        
+        // Method 2: Test if common ad scripts are blocked
+        const adScripts = [
+            'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js',
+            'https://www.googletagmanager.com/gtag/js',
+            'https://www.google-analytics.com/analytics.js'
+        ];
+        
+        let scriptBlocked = false;
+        adScripts.forEach(scriptUrl => {
+            const script = document.createElement('script');
+            script.src = scriptUrl;
+            script.onerror = () => {
+                console.log(`Script blocked: ${scriptUrl}`);
+                scriptBlocked = true;
+            };
+            script.onload = () => {
+                console.log(`Script loaded: ${scriptUrl}`);
+            };
+            document.head.appendChild(script);
+        });
+        
+        // Method 2.5: Test ad images
+        const adImages = [
+            'https://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCNjM-mARABGAEyCJjF0-t6',
+            'https://www.google-analytics.com/collect',
+            'https://www.googletagmanager.com/gtm.js'
+        ];
+        
+        let imageBlocked = false;
+        adImages.forEach(imageUrl => {
+            const img = new Image();
+            img.onerror = () => {
+                console.log(`Ad image blocked: ${imageUrl}`);
+                imageBlocked = true;
+            };
+            img.onload = () => {
+                console.log(`Ad image loaded: ${imageUrl}`);
+            };
+            img.src = imageUrl;
+        });
+        
+        // Method 3: Test common ad selectors
         const adSelectors = [
             '.adsbygoogle',
             '.advertisement',
@@ -1312,7 +1374,9 @@ function detectAdblock() {
             '[class*="ad-"]',
             '[id*="ad-"]',
             '[class*="ads-"]',
-            '[id*="ads-"]'
+            '[id*="ads-"]',
+            '[class*="banner"]',
+            '[id*="banner"]'
         ];
         
         let blockedElements = 0;
@@ -1325,11 +1389,54 @@ function detectAdblock() {
             });
         });
         
+        // Method 4: Test fetch requests to ad domains
+        const adDomains = [
+            'https://pagead2.googlesyndication.com',
+            'https://www.google-analytics.com',
+            'https://www.googletagmanager.com'
+        ];
+        
+        let fetchBlocked = false;
+        Promise.all(adDomains.map(domain => 
+            fetch(domain, { method: 'HEAD', mode: 'no-cors' })
+                .then(() => {
+                    console.log(`Fetch to ${domain} succeeded`);
+                    return false;
+                })
+                .catch(() => {
+                    console.log(`Fetch to ${domain} blocked`);
+                    return true;
+                })
+        )).then(results => {
+            fetchBlocked = results.some(result => result);
+        });
+        
         setTimeout(() => {
-            const isBlocked = testAd.offsetHeight === 0 || blockedElements > 0;
-            document.body.removeChild(testAd);
+            // Check which elements are blocked
+            testElementsArray.forEach((element, index) => {
+                const isBlocked = element.offsetHeight === 0;
+                console.log(`Element ${testElements[index].className} blocked:`, isBlocked);
+                if (isBlocked) blockedCount++;
+            });
+            
+            // Clean up test elements
+            testElementsArray.forEach(element => {
+                if (element.parentNode) {
+                    element.parentNode.removeChild(element);
+                }
+            });
+            
+            const isBlocked = blockedCount > 0 || scriptBlocked || imageBlocked || fetchBlocked || blockedElements > 0;
+            console.log('🔍 Adblock detection results:');
+            console.log('- Blocked test elements:', blockedCount);
+            console.log('- Blocked scripts:', scriptBlocked);
+            console.log('- Blocked images:', imageBlocked);
+            console.log('- Blocked fetch requests:', fetchBlocked);
+            console.log('- Blocked existing elements:', blockedElements);
+            console.log('- Final result (adblock detected):', isBlocked);
+            
             resolve(isBlocked);
-        }, 150);
+        }, 500); // Increased timeout for better detection
     });
 }
 
@@ -2263,26 +2370,52 @@ function updateRateLimit() {
 
 // Initialize adblock detection with delay to avoid false positives
 function initializeAdblockDetection() {
+    console.log('🚀 Initializing adblock detection...');
+    
     // Wait for page to fully load before detecting adblock
     setTimeout(async () => {
         try {
+            console.log('🔍 Running adblock detection...');
             const isAdblockActive = await detectAdblock();
             
+            console.log('📊 Adblock detection result:', isAdblockActive);
+            
             if (isAdblockActive) {
+                console.log('⚠️ Adblock detected! Checking if warning should be shown...');
+                
                 // Check if user has already dismissed the warning
                 const dismissed = localStorage.getItem('adblockWarningDismissed');
                 const dismissedTime = localStorage.getItem('adblockWarningDismissedTime');
                 const now = Date.now();
                 
+                console.log('Dismissed:', dismissed);
+                console.log('Dismissed time:', dismissedTime);
+                
                 // Show warning if not dismissed or if dismissed more than 24 hours ago
                 if (!dismissed || (dismissedTime && (now - parseInt(dismissedTime)) > 24 * 60 * 60 * 1000)) {
+                    console.log('🎯 Showing adblock warning...');
                     showAdblockWarning();
+                } else {
+                    console.log('⏰ Warning was dismissed recently, not showing again');
                 }
+            } else {
+                console.log('✅ No adblock detected');
             }
         } catch (error) {
-            console.log('Adblock detection error:', error);
+            console.error('❌ Adblock detection error:', error);
         }
-    }, 2000); // Wait 2 seconds after page load
+    }, 1000); // Reduced to 1 second for faster detection
+    
+    // Add manual trigger for testing
+    window.testAdblock = async () => {
+        console.log('🧪 Manual adblock test triggered');
+        const result = await detectAdblock();
+        console.log('🧪 Manual test result:', result);
+        if (result) {
+            showAdblockWarning();
+        }
+        return result;
+    };
 }
 
 
