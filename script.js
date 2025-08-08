@@ -1156,9 +1156,15 @@ function displayProducts(products) {
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
             console.log('Product ID:', productId);
+            console.log('All products:', window.allProducts);
             const agent = localStorage.getItem('agent') || 'kakobuy';
-            // Najdi produkt podle id
-            const product = window.allProducts.find(p => p._id === productId || p.id === productId);
+            // Najdi produkt podle id - zkus různé možnosti
+            const product = window.allProducts.find(p => 
+                p._id === productId || 
+                p.id === productId || 
+                p._id === parseInt(productId) || 
+                p.id === parseInt(productId)
+            );
             console.log('Found product:', product);
             if (!product || !product.link) {
                 console.log('No product or link found');
@@ -1192,9 +1198,15 @@ function displayProducts(products) {
             e.preventDefault();
             const productId = this.getAttribute('data-product-id');
             console.log('Product ID:', productId);
+            console.log('All products:', window.allProducts);
             const agent = localStorage.getItem('agent') || 'kakobuy';
-            // Najdi produkt podle id
-            const product = window.allProducts.find(p => p._id === productId || p.id === productId);
+            // Najdi produkt podle id - zkus různé možnosti
+            const product = window.allProducts.find(p => 
+                p._id === productId || 
+                p.id === productId || 
+                p._id === parseInt(productId) || 
+                p.id === parseInt(productId)
+            );
             console.log('Found product:', product);
             if (!product || !product.link) {
                 console.log('No product or link found');
