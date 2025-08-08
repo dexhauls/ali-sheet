@@ -148,6 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add additional initialization for lazy loading scroll detection
     window.addEventListener('scroll', handleLazyLoad);
     
+    // Initialize adblock detection
+    initializeAdblockDetection();
+    
     // Initialize custom agent dropdown
     const agentDropdownBtn = document.getElementById('agent-dropdown-btn');
     const agentDropdownMenu = document.getElementById('agent-dropdown-menu');
@@ -1275,6 +1278,359 @@ function displayProducts(products) {
     }
 }
 
+// Function to create affiliate link manually
+function createAffiliateLink(product, agent) {
+    if (product.link.includes('taobao.com')) {
+        const itemId = product.link.match(/id=(\d+)/)?.[1];
+        if (itemId) {
+            return `https://affiliate.repsheet.net/${agent}/taobao/${itemId}`;
+        }
+    }
+    return product.link; // fallback to original link
+}
+
+// Enhanced adblock detection with multiple methods
+function detectAdblock() {
+    return new Promise((resolve) => {
+        // Method 1: Test ad element
+        const testAd = document.createElement('div');
+        testAd.innerHTML = '&nbsp;';
+        testAd.className = 'adsbox';
+        testAd.style.position = 'absolute';
+        testAd.style.left = '-10000px';
+        testAd.style.top = '-1000px';
+        testAd.style.width = '1px';
+        testAd.style.height = '1px';
+        testAd.style.overflow = 'hidden';
+        document.body.appendChild(testAd);
+        
+        // Method 2: Test common ad selectors
+        const adSelectors = [
+            '.adsbygoogle',
+            '.advertisement',
+            '.ad-container',
+            '[class*="ad-"]',
+            '[id*="ad-"]',
+            '[class*="ads-"]',
+            '[id*="ads-"]'
+        ];
+        
+        let blockedElements = 0;
+        adSelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                if (el.offsetHeight === 0 || el.style.display === 'none') {
+                    blockedElements++;
+                }
+            });
+        });
+        
+        setTimeout(() => {
+            const isBlocked = testAd.offsetHeight === 0 || blockedElements > 0;
+            document.body.removeChild(testAd);
+            resolve(isBlocked);
+        }, 150);
+    });
+}
+
+// Modern adblock warning with improved design
+function showAdblockWarning() {
+    // Remove existing warning if any
+    const existingWarning = document.getElementById('adblock-warning');
+    if (existingWarning) {
+        existingWarning.remove();
+    }
+    
+    const warning = document.createElement('div');
+    warning.id = 'adblock-warning';
+    warning.innerHTML = `
+        <div class="adblock-overlay">
+            <div class="adblock-content">
+                <div class="adblock-header">
+                    <div class="adblock-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </div>
+                    <button class="adblock-close" onclick="hideAdblockWarning()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="adblock-body">
+                    <h2>Ad Blocker Detected</h2>
+                    <p>We detected that you're using an ad blocker. This website uses affiliate links to provide you with the best shopping experience.</p>
+                    <div class="adblock-features">
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c-1 0-2.4-.4-3.5-1.5S16 9 16 8s.4-2.5 1.5-3.5S20 3 21 3s2.4.4 3.5 1.5S26 7 26 8s-.4 2.5-1.5 3.5S22 12 21 12z"></path>
+                            </svg>
+                            <span>Best prices and deals</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c-1 0-2.4-.4-3.5-1.5S16 9 16 8s.4-2.5 1.5-3.5S20 3 21 3s2.4.4 3.5 1.5S26 7 26 8s-.4 2.5-1.5 3.5S22 12 21 12z"></path>
+                            </svg>
+                            <span>Secure affiliate links</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c-1 0-2.4-.4-3.5-1.5S16 9 16 8s.4-2.5 1.5-3.5S20 3 21 3s2.4.4 3.5 1.5S26 7 26 8s-.4 2.5-1.5 3.5S22 12 21 12z"></path>
+                            </svg>
+                            <span>No tracking or ads</span>
+                        </div>
+                    </div>
+                    <p class="adblock-note"><strong>Please disable your ad blocker to use all features properly.</strong></p>
+                </div>
+                <div class="adblock-actions">
+                    <button onclick="hideAdblockWarning()" class="adblock-btn secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                        Continue Anyway
+                    </button>
+                    <button onclick="location.reload()" class="adblock-btn primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M3 21v-5h5"></path>
+                        </svg>
+                        Reload Page
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(warning);
+    
+    // Add modern styles
+    const style = document.createElement('style');
+    style.textContent = `
+        #adblock-warning {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .adblock-overlay {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 0;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideIn 0.4s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .adblock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 24px 24px 0 24px;
+        }
+        
+        .adblock-icon {
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .adblock-close {
+            background: rgba(0, 0, 0, 0.05);
+            border: none;
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #6b7280;
+        }
+        
+        .adblock-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+            color: #374151;
+        }
+        
+        .adblock-body {
+            padding: 20px 24px 24px 24px;
+        }
+        
+        .adblock-body h2 {
+            color: #1f2937;
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .adblock-body p {
+            color: #6b7280;
+            margin: 0 0 20px 0;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        
+        .adblock-features {
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 14px;
+        }
+        
+        .feature-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .feature-item svg {
+            color: #10b981;
+            flex-shrink: 0;
+        }
+        
+        .adblock-note {
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 16px 0 0 0 !important;
+            border-left: 3px solid #f59e0b;
+        }
+        
+        .adblock-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            padding: 0 24px 24px 24px;
+        }
+        
+        .adblock-btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 140px;
+            justify-content: center;
+        }
+        
+        .adblock-btn.primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .adblock-btn.primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+        
+        .adblock-btn.secondary {
+            background: rgba(0, 0, 0, 0.05);
+            color: #374151;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .adblock-btn.secondary:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 480px) {
+            .adblock-overlay {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            .adblock-actions {
+                flex-direction: column;
+            }
+            
+            .adblock-btn {
+                width: 100%;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Function to hide adblock warning
+function hideAdblockWarning() {
+    const warning = document.getElementById('adblock-warning');
+    if (warning) {
+        // Add fade out animation
+        warning.style.opacity = '0';
+        warning.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+            if (warning.parentNode) {
+                warning.remove();
+            }
+        }, 300);
+        
+        // Save that user dismissed the warning
+        localStorage.setItem('adblockWarningDismissed', 'true');
+        localStorage.setItem('adblockWarningDismissedTime', Date.now().toString());
+    }
+}
+
 // Function to handle loading more items on scroll
 function handleLazyLoad() {
     // Check if we're near the bottom of the page
@@ -1903,6 +2259,30 @@ function updateRateLimit() {
     
     // Save back to localStorage
     localStorage.setItem('reportRateLimit', JSON.stringify(rateLimitData));
+}
+
+// Initialize adblock detection with delay to avoid false positives
+function initializeAdblockDetection() {
+    // Wait for page to fully load before detecting adblock
+    setTimeout(async () => {
+        try {
+            const isAdblockActive = await detectAdblock();
+            
+            if (isAdblockActive) {
+                // Check if user has already dismissed the warning
+                const dismissed = localStorage.getItem('adblockWarningDismissed');
+                const dismissedTime = localStorage.getItem('adblockWarningDismissedTime');
+                const now = Date.now();
+                
+                // Show warning if not dismissed or if dismissed more than 24 hours ago
+                if (!dismissed || (dismissedTime && (now - parseInt(dismissedTime)) > 24 * 60 * 60 * 1000)) {
+                    showAdblockWarning();
+                }
+            }
+        } catch (error) {
+            console.log('Adblock detection error:', error);
+        }
+    }, 2000); // Wait 2 seconds after page load
 }
 
 
