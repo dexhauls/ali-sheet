@@ -1842,6 +1842,46 @@ function showAdblockWarning() {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
             border-left: 4px solid #3b82f6;
         }
+        
+        /* Specific styles for adblock confirmation dialog */
+        #adblock-confirmation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 100%);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        #adblock-confirmation .adblock-overlay {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 24px;
+            padding: 0;
+            max-width: 520px;
+            width: 90%;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.4s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #adblock-confirmation .adblock-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        }
     `;
     document.head.appendChild(style);
 }
@@ -1925,6 +1965,244 @@ function showAdblockConfirmation() {
     `;
     
     document.body.appendChild(confirmation);
+    
+    // Add styles for confirmation dialog
+    const confirmationStyle = document.createElement('style');
+    confirmationStyle.textContent = `
+        #adblock-confirmation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 100%);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        #adblock-confirmation .adblock-overlay {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 24px;
+            padding: 0;
+            max-width: 520px;
+            width: 90%;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.4s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #adblock-confirmation .adblock-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        #adblock-confirmation .adblock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 28px 28px 0 28px;
+        }
+        
+        #adblock-confirmation .adblock-icon {
+            color: #3b82f6;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        #adblock-confirmation .adblock-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        #adblock-confirmation .adblock-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        #adblock-confirmation .adblock-body {
+            padding: 24px 28px 28px 28px;
+        }
+        
+        #adblock-confirmation .adblock-body h2 {
+            color: #3b82f6;
+            margin: 0 0 16px 0;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.3;
+            text-align: center;
+        }
+        
+        #adblock-confirmation .adblock-body p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0 0 24px 0;
+            line-height: 1.6;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        #adblock-confirmation .adblock-features {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 24px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+        }
+        
+        #adblock-confirmation .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+        }
+        
+        #adblock-confirmation .feature-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        #adblock-confirmation .feature-item svg {
+            color: #10b981;
+            flex-shrink: 0;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            padding: 4px;
+        }
+        
+        #adblock-confirmation .adblock-note {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0 0 0 !important;
+            border-left: 4px solid #3b82f6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        #adblock-confirmation .adblock-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            padding: 0 28px 28px 28px;
+        }
+        
+        #adblock-confirmation .adblock-btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 160px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #adblock-confirmation .adblock-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        #adblock-confirmation .adblock-btn:hover::before {
+            left: 100%;
+        }
+        
+        #adblock-confirmation .adblock-btn.primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        #adblock-confirmation .adblock-btn.primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.5);
+        }
+        
+        #adblock-confirmation .adblock-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+        }
+        
+        #adblock-confirmation .adblock-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        @media (max-width: 480px) {
+            #adblock-confirmation .adblock-overlay {
+                width: 95%;
+                margin: 20px;
+            }
+            
+            #adblock-confirmation .adblock-actions {
+                flex-direction: column;
+            }
+            
+            #adblock-confirmation .adblock-btn {
+                width: 100%;
+            }
+        }
+    `;
+    document.head.appendChild(confirmationStyle);
 }
 
 // Function to hide adblock confirmation
