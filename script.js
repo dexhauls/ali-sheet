@@ -1497,7 +1497,7 @@ function showAdblockWarning() {
                     <p class="adblock-note"><strong>Please disable your ad blocker to use all features properly.</strong></p>
                 </div>
                 <div class="adblock-actions">
-                    <button onclick="hideAdblockWarning()" class="adblock-btn secondary">
+                    <button onclick="showAdblockConfirmation()" class="adblock-btn secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6 6 18"></path>
                             <path d="m6 6 12 12"></path>
@@ -1529,8 +1529,8 @@ function showAdblockWarning() {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 100%);
+            backdrop-filter: blur(12px);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -1545,14 +1545,26 @@ function showAdblockWarning() {
         }
         
         .adblock-overlay {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 24px;
             padding: 0;
-            max-width: 480px;
+            max-width: 500px;
             width: 90%;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
             animation: slideIn 0.4s ease-out;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .adblock-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
         }
         
         @keyframes slideIn {
@@ -1570,72 +1582,77 @@ function showAdblockWarning() {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            padding: 24px 24px 0 24px;
+            padding: 28px 28px 0 28px;
         }
         
         .adblock-icon {
             color: #f59e0b;
-            background: rgba(245, 158, 11, 0.1);
-            border-radius: 12px;
-            padding: 12px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-radius: 16px;
+            padding: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid rgba(245, 158, 11, 0.3);
         }
         
         .adblock-close {
-            background: rgba(0, 0, 0, 0.05);
-            border: none;
-            border-radius: 8px;
-            width: 32px;
-            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s;
-            color: #6b7280;
+            color: rgba(255, 255, 255, 0.7);
         }
         
         .adblock-close:hover {
-            background: rgba(0, 0, 0, 0.1);
-            color: #374151;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: scale(1.05);
         }
         
         .adblock-body {
-            padding: 20px 24px 24px 24px;
+            padding: 24px 28px 28px 28px;
         }
         
         .adblock-body h2 {
-            color: #1f2937;
-            margin: 0 0 12px 0;
-            font-size: 22px;
+            color: white;
+            margin: 0 0 16px 0;
+            font-size: 24px;
             font-weight: 700;
             line-height: 1.3;
+            text-align: center;
         }
         
         .adblock-body p {
-            color: #6b7280;
-            margin: 0 0 20px 0;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0 0 24px 0;
             line-height: 1.6;
-            font-size: 15px;
+            font-size: 16px;
+            text-align: center;
         }
         
         .adblock-features {
-            background: rgba(59, 130, 246, 0.05);
-            border-radius: 12px;
-            padding: 16px;
-            margin: 20px 0;
-            border: 1px solid rgba(59, 130, 246, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 24px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
         }
         
         .feature-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            color: #374151;
-            font-size: 14px;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
         }
         
         .feature-item:last-child {
@@ -1645,59 +1662,83 @@ function showAdblockWarning() {
         .feature-item svg {
             color: #10b981;
             flex-shrink: 0;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            padding: 4px;
         }
         
         .adblock-note {
-            background: rgba(245, 158, 11, 0.1);
-            border-radius: 8px;
-            padding: 12px;
-            margin: 16px 0 0 0 !important;
-            border-left: 3px solid #f59e0b;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0 0 0 !important;
+            border-left: 4px solid #f59e0b;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .adblock-actions {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             justify-content: center;
-            padding: 0 24px 24px 24px;
+            padding: 0 28px 28px 28px;
         }
         
         .adblock-btn {
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 14px 24px;
+            border-radius: 12px;
             border: none;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
+            transition: all 0.3s;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            min-width: 140px;
+            gap: 10px;
+            min-width: 160px;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .adblock-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .adblock-btn:hover::before {
+            left: 100%;
         }
         
         .adblock-btn.primary {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
         
         .adblock-btn.primary:hover {
             background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.5);
         }
         
         .adblock-btn.secondary {
-            background: rgba(0, 0, 0, 0.05);
-            color: #374151;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
         }
         
         .adblock-btn.secondary:hover {
-            background: rgba(0, 0, 0, 0.1);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            color: white;
         }
         
         @media (max-width: 480px) {
@@ -1714,8 +1755,129 @@ function showAdblockWarning() {
                 width: 100%;
             }
         }
+        
+        /* Confirmation dialog specific styles */
+        .confirmation-content {
+            max-width: 520px;
+        }
+        
+        .confirmation-content .adblock-icon {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+        }
+        
+        .confirmation-content .adblock-body h2 {
+            color: #3b82f6;
+        }
+        
+        .confirmation-content .adblock-note {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            border-left: 4px solid #3b82f6;
+        }
     `;
     document.head.appendChild(style);
+}
+
+// Function to show confirmation dialog
+function showAdblockConfirmation() {
+    // Remove existing warning
+    const warning = document.getElementById('adblock-warning');
+    if (warning) {
+        warning.remove();
+    }
+    
+    const confirmation = document.createElement('div');
+    confirmation.id = 'adblock-confirmation';
+    confirmation.innerHTML = `
+        <div class="adblock-overlay">
+            <div class="adblock-content confirmation-content">
+                <div class="adblock-header">
+                    <div class="adblock-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4"></path>
+                            <path d="M12 8h.01"></path>
+                        </svg>
+                    </div>
+                    <button class="adblock-close" onclick="hideAdblockConfirmation()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="adblock-body">
+                    <h2>Are you sure?</h2>
+                    <p>We have <strong>0 ads</strong> on this website, but we need the API to run as it should. Please turn off your ad blocker for the best experience.</p>
+                    <div class="adblock-features">
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c-1 0-2.4-.4-3.5-1.5S16 9 16 8s.4-2.5 1.5-3.5S20 3 21 3s2.4.4 3.5 1.5S26 7 26 8s-.4 2.5-1.5 3.5S22 12 21 12z"></path>
+                            </svg>
+                            <span>No annoying popups or banners</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c-1 0-2.4-.4-3.5-1.5S16 9 16 8s.4-2.5 1.5-3.5S20 3 21 3s2.4.4 3.5 1.5S26 7 26 8s-.4 2.5-1.5 3.5S22 12 21 12z"></path>
+                            </svg>
+                            <span>Clean, ad-free experience</span>
+                        </div>
+                        <div class="feature-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 12l2 2 4-4"></path>
+                                <path d="M21 12c-1 0-2.4-.4-3.5-1.5S16 9 16 8s.4-2.5 1.5-3.5S20 3 21 3s2.4.4 3.5 1.5S26 7 26 8s-.4 2.5-1.5 3.5S22 12 21 12z"></path>
+                            </svg>
+                            <span>API needs to function properly</span>
+                        </div>
+                    </div>
+                    <p class="adblock-note"><strong>Please disable your ad blocker to use all features properly.</strong></p>
+                </div>
+                <div class="adblock-actions">
+                    <button onclick="hideAdblockConfirmation()" class="adblock-btn secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                        I'll keep it on
+                    </button>
+                    <button onclick="location.reload()" class="adblock-btn primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                            <path d="M21 3v5h-5"></path>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                            <path d="M3 21v-5h5"></path>
+                        </svg>
+                        Turn off ad blocker
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(confirmation);
+}
+
+// Function to hide adblock confirmation
+function hideAdblockConfirmation() {
+    const confirmation = document.getElementById('adblock-confirmation');
+    if (confirmation) {
+        // Add fade out animation
+        confirmation.style.opacity = '0';
+        confirmation.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+            if (confirmation.parentNode) {
+                confirmation.remove();
+            }
+        }, 300);
+        
+        // Save that user dismissed the warning
+        localStorage.setItem('adblockWarningDismissed', 'true');
+        localStorage.setItem('adblockWarningDismissedTime', Date.now().toString());
+    }
 }
 
 // Function to hide adblock warning
@@ -2391,13 +2553,9 @@ function initializeAdblockDetection() {
                 console.log('Dismissed:', dismissed);
                 console.log('Dismissed time:', dismissedTime);
                 
-                // Show warning if not dismissed or if dismissed more than 24 hours ago
-                if (!dismissed || (dismissedTime && (now - parseInt(dismissedTime)) > 24 * 60 * 60 * 1000)) {
-                    console.log('🎯 Showing adblock warning...');
-                    showAdblockWarning();
-                } else {
-                    console.log('⏰ Warning was dismissed recently, not showing again');
-                }
+                // Always show warning if adblock is detected (removed 24h restriction)
+                console.log('🎯 Showing adblock warning...');
+                showAdblockWarning();
             } else {
                 console.log('✅ No adblock detected');
             }
