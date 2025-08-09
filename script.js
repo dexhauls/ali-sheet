@@ -1349,7 +1349,7 @@ function detectAdblock() {
             document.head.appendChild(script);
         });
         
-        // Method 2.5: Test ad images
+        // Method 2.5: Test ad images (only if they're actually ad-related)
         const adImages = [
             'https://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKCNjM-mARABGAEyCJjF0-t6',
             'https://www.google-analytics.com/collect',
@@ -1372,7 +1372,7 @@ function detectAdblock() {
             img.src = imageUrl;
         });
         
-        // Method 3: Test common ad selectors
+        // Method 3: Test common ad selectors (only count if they're actually ad-related)
         const adSelectors = [
             '.adsbygoogle',
             '.advertisement',
@@ -1389,13 +1389,21 @@ function detectAdblock() {
         adSelectors.forEach(selector => {
             const elements = document.querySelectorAll(selector);
             elements.forEach(el => {
+                // Only count as blocked if it's actually an ad element and is hidden
                 if (el.offsetHeight === 0 || el.style.display === 'none') {
-                    blockedElements++;
+                    // Check if it's actually an ad-related element by looking at its content or attributes
+                    const isAdElement = el.classList.contains('adsbygoogle') || 
+                                      el.classList.contains('advertisement') ||
+                                      el.id.includes('ad') ||
+                                      el.className.includes('ad');
+                    if (isAdElement) {
+                        blockedElements++;
+                    }
                 }
             });
         });
         
-        // Method 4: Test fetch requests to ad domains
+        // Method 4: Test fetch requests to ad domains (more reliable method)
         const adDomains = [
             'https://pagead2.googlesyndication.com',
             'https://www.google-analytics.com',
@@ -1404,6 +1412,7 @@ function detectAdblock() {
         
         let fetchBlocked = false;
         let fetchTestsCompleted = 0;
+        let fetchBlockedCount = 0;
         
         adDomains.forEach(domain => {
             fetch(domain, { method: 'HEAD', mode: 'no-cors' })
@@ -1413,7 +1422,7 @@ function detectAdblock() {
                 })
                 .catch(() => {
                     console.log(`Fetch to ${domain} blocked`);
-                    fetchBlocked = true;
+                    fetchBlockedCount++;
                     fetchTestsCompleted++;
                 });
         });
@@ -1440,13 +1449,24 @@ function detectAdblock() {
                     }
                 });
                 
-                const isBlocked = blockedCount > 0 || scriptBlocked || imageBlocked || fetchBlocked || blockedElements > 0;
+                // More conservative detection logic
+                // Only consider it blocked if we have multiple positive indicators
+                const totalIndicators = (blockedCount > 0 ? 1 : 0) + 
+                                      (scriptBlocked ? 1 : 0) + 
+                                      (imageBlocked ? 1 : 0) + 
+                                      (fetchBlockedCount >= 2 ? 1 : 0) + 
+                                      (blockedElements > 0 ? 1 : 0);
+                
+                // Require at least 2 positive indicators to consider adblock detected
+                const isBlocked = totalIndicators >= 2;
+                
                 console.log('🔍 Adblock detection results:');
                 console.log('- Blocked test elements:', blockedCount);
                 console.log('- Blocked scripts:', scriptBlocked);
                 console.log('- Blocked images:', imageBlocked);
-                console.log('- Blocked fetch requests:', fetchBlocked);
+                console.log('- Blocked fetch requests:', fetchBlockedCount);
                 console.log('- Blocked existing elements:', blockedElements);
+                console.log('- Total indicators:', totalIndicators);
                 console.log('- Final result (adblock detected):', isBlocked);
                 
                 resolve(isBlocked);
@@ -1464,6 +1484,13 @@ function detectAdblock() {
 // Initialize adblock detection with delay to avoid false positives
 function initializeAdblockDetection() {
     console.log('🚀 Initializing adblock detection...');
+    
+    // Check if user has disabled adblock detection
+    const adblockDetectionDisabled = localStorage.getItem('adblockDetectionDisabled');
+    if (adblockDetectionDisabled === 'true') {
+        console.log('🚫 Adblock detection disabled by user');
+        return;
+    }
     
     // Wait for page to fully load before detecting adblock
     setTimeout(async () => {
@@ -1504,6 +1531,20 @@ function initializeAdblockDetection() {
             showAdblockWarning();
         }
         return result;
+    };
+    
+    // Add function to disable adblock detection
+    window.disableAdblockDetection = () => {
+        localStorage.setItem('adblockDetectionDisabled', 'true');
+        console.log('🚫 Adblock detection disabled by user');
+        showToast('Adblock Detection Disabled', 'Adblock detection has been disabled. You can re-enable it by clearing your browser data.', 'info');
+    };
+    
+    // Add function to re-enable adblock detection
+    window.enableAdblockDetection = () => {
+        localStorage.removeItem('adblockDetectionDisabled');
+        console.log('✅ Adblock detection re-enabled');
+        showToast('Adblock Detection Enabled', 'Adblock detection has been re-enabled.', 'info');
     };
 }
 
@@ -1579,6 +1620,15 @@ function showAdblockWarning() {
                             <path d="M3 21v-5h5"></path>
                         </svg>
                         Reload Page
+                    </button>
+                </div>
+                <div class="adblock-footer">
+                    <button onclick="window.disableAdblockDetection(); hideAdblockWarning()" class="adblock-disable-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"></path>
+                            <path d="m6 6 12 12"></path>
+                        </svg>
+                        Disable Adblock Detection
                     </button>
                 </div>
             </div>
@@ -1806,6 +1856,35 @@ function showAdblockWarning() {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
             color: white;
+        }
+        
+        .adblock-footer {
+            display: flex;
+            justify-content: center;
+            padding: 0 28px 20px 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+        
+        .adblock-disable-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 16px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+        
+        .adblock-disable-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.3);
         }
         
         @media (max-width: 480px) {
