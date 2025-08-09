@@ -1497,7 +1497,7 @@ function showAdblockWarning() {
                     <p class="adblock-note"><strong>Please disable your ad blocker to use all features properly.</strong></p>
                 </div>
                 <div class="adblock-actions">
-                    <button onclick="showAdblockConfirmation()" class="adblock-btn secondary">
+                    <button onclick="window.showAdblockConfirmation()" class="adblock-btn secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6 6 18"></path>
                             <path d="m6 6 12 12"></path>
@@ -1800,7 +1800,7 @@ function showAdblockConfirmation() {
                             <path d="M12 8h.01"></path>
                         </svg>
                     </div>
-                    <button class="adblock-close" onclick="hideAdblockConfirmation()">
+                    <button class="adblock-close" onclick="window.hideAdblockConfirmation()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6 6 18"></path>
                             <path d="m6 6 12 12"></path>
@@ -1836,7 +1836,7 @@ function showAdblockConfirmation() {
                     <p class="adblock-note"><strong>Please disable your ad blocker to use all features properly.</strong></p>
                 </div>
                 <div class="adblock-actions">
-                    <button onclick="hideAdblockConfirmation()" class="adblock-btn secondary">
+                    <button onclick="window.hideAdblockConfirmation()" class="adblock-btn secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6 6 18"></path>
                             <path d="m6 6 12 12"></path>
@@ -2530,50 +2530,6 @@ function updateRateLimit() {
     localStorage.setItem('reportRateLimit', JSON.stringify(rateLimitData));
 }
 
-// Initialize adblock detection with delay to avoid false positives
-function initializeAdblockDetection() {
-    console.log('🚀 Initializing adblock detection...');
-    
-    // Wait for page to fully load before detecting adblock
-    setTimeout(async () => {
-        try {
-            console.log('🔍 Running adblock detection...');
-            const isAdblockActive = await detectAdblock();
-            
-            console.log('📊 Adblock detection result:', isAdblockActive);
-            
-            if (isAdblockActive) {
-                console.log('⚠️ Adblock detected! Checking if warning should be shown...');
-                
-                // Check if user has already dismissed the warning
-                const dismissed = localStorage.getItem('adblockWarningDismissed');
-                const dismissedTime = localStorage.getItem('adblockWarningDismissedTime');
-                const now = Date.now();
-                
-                console.log('Dismissed:', dismissed);
-                console.log('Dismissed time:', dismissedTime);
-                
-                // Always show warning if adblock is detected (removed 24h restriction)
-                console.log('🎯 Showing adblock warning...');
-                showAdblockWarning();
-            } else {
-                console.log('✅ No adblock detected');
-            }
-        } catch (error) {
-            console.error('❌ Adblock detection error:', error);
-        }
-    }, 1000); // Reduced to 1 second for faster detection
-    
-    // Add manual trigger for testing
-    window.testAdblock = async () => {
-        console.log('🧪 Manual adblock test triggered');
-        const result = await detectAdblock();
-        console.log('🧪 Manual test result:', result);
-        if (result) {
-            showAdblockWarning();
-        }
-        return result;
-    };
-}
-
-
+// Make adblock functions globally available
+window.showAdblockConfirmation = showAdblockConfirmation;
+window.hideAdblockConfirmation = hideAdblockConfirmation;
