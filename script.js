@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize language and currency settings
     initializeSettings();
     
+    // Initialize adblock detection
+    initializeAdblockDetection();
+    
     // Create toast container
     const toastContainer = document.createElement('ol');
     toastContainer.className = 'toast-container';
@@ -147,9 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add additional initialization for lazy loading scroll detection
     window.addEventListener('scroll', handleLazyLoad);
-    
-    // Initialize adblock detection
-    initializeAdblockDetection();
     
     // Initialize custom agent dropdown
     const agentDropdownBtn = document.getElementById('agent-dropdown-btn');
@@ -1333,15 +1333,18 @@ function detectAdblock() {
         ];
         
         let scriptBlocked = false;
+        let scriptTestsCompleted = 0;
         adScripts.forEach(scriptUrl => {
             const script = document.createElement('script');
             script.src = scriptUrl;
             script.onerror = () => {
                 console.log(`Script blocked: ${scriptUrl}`);
                 scriptBlocked = true;
+                scriptTestsCompleted++;
             };
             script.onload = () => {
                 console.log(`Script loaded: ${scriptUrl}`);
+                scriptTestsCompleted++;
             };
             document.head.appendChild(script);
         });
@@ -1354,14 +1357,17 @@ function detectAdblock() {
         ];
         
         let imageBlocked = false;
+        let imageTestsCompleted = 0;
         adImages.forEach(imageUrl => {
             const img = new Image();
             img.onerror = () => {
                 console.log(`Ad image blocked: ${imageUrl}`);
                 imageBlocked = true;
+                imageTestsCompleted++;
             };
             img.onload = () => {
                 console.log(`Ad image loaded: ${imageUrl}`);
+                imageTestsCompleted++;
             };
             img.src = imageUrl;
         });
@@ -1397,47 +1403,108 @@ function detectAdblock() {
         ];
         
         let fetchBlocked = false;
-        Promise.all(adDomains.map(domain => 
+        let fetchTestsCompleted = 0;
+        
+        adDomains.forEach(domain => {
             fetch(domain, { method: 'HEAD', mode: 'no-cors' })
                 .then(() => {
                     console.log(`Fetch to ${domain} succeeded`);
-                    return false;
+                    fetchTestsCompleted++;
                 })
                 .catch(() => {
                     console.log(`Fetch to ${domain} blocked`);
-                    return true;
-                })
-        )).then(results => {
-            fetchBlocked = results.some(result => result);
+                    fetchBlocked = true;
+                    fetchTestsCompleted++;
+                });
         });
         
-        setTimeout(() => {
-            // Check which elements are blocked
-            testElementsArray.forEach((element, index) => {
-                const isBlocked = element.offsetHeight === 0;
-                console.log(`Element ${testElements[index].className} blocked:`, isBlocked);
-                if (isBlocked) blockedCount++;
-            });
+        // Check completion and resolve
+        const checkCompletion = () => {
+            const allTestsCompleted = 
+                scriptTestsCompleted >= adScripts.length && 
+                imageTestsCompleted >= adImages.length && 
+                fetchTestsCompleted >= adDomains.length;
             
-            // Clean up test elements
-            testElementsArray.forEach(element => {
-                if (element.parentNode) {
-                    element.parentNode.removeChild(element);
-                }
-            });
-            
-            const isBlocked = blockedCount > 0 || scriptBlocked || imageBlocked || fetchBlocked || blockedElements > 0;
-            console.log('🔍 Adblock detection results:');
-            console.log('- Blocked test elements:', blockedCount);
-            console.log('- Blocked scripts:', scriptBlocked);
-            console.log('- Blocked images:', imageBlocked);
-            console.log('- Blocked fetch requests:', fetchBlocked);
-            console.log('- Blocked existing elements:', blockedElements);
-            console.log('- Final result (adblock detected):', isBlocked);
-            
-            resolve(isBlocked);
-        }, 500); // Increased timeout for better detection
+            if (allTestsCompleted) {
+                // Check which elements are blocked
+                testElementsArray.forEach((element, index) => {
+                    const isBlocked = element.offsetHeight === 0;
+                    console.log(`Element ${testElements[index].className} blocked:`, isBlocked);
+                    if (isBlocked) blockedCount++;
+                });
+                
+                // Clean up test elements
+                testElementsArray.forEach(element => {
+                    if (element.parentNode) {
+                        element.parentNode.removeChild(element);
+                    }
+                });
+                
+                const isBlocked = blockedCount > 0 || scriptBlocked || imageBlocked || fetchBlocked || blockedElements > 0;
+                console.log('🔍 Adblock detection results:');
+                console.log('- Blocked test elements:', blockedCount);
+                console.log('- Blocked scripts:', scriptBlocked);
+                console.log('- Blocked images:', imageBlocked);
+                console.log('- Blocked fetch requests:', fetchBlocked);
+                console.log('- Blocked existing elements:', blockedElements);
+                console.log('- Final result (adblock detected):', isBlocked);
+                
+                resolve(isBlocked);
+            } else {
+                // Check again in 100ms
+                setTimeout(checkCompletion, 100);
+            }
+        };
+        
+        // Start checking for completion after a short delay
+        setTimeout(checkCompletion, 100);
     });
+}
+
+// Initialize adblock detection with delay to avoid false positives
+function initializeAdblockDetection() {
+    console.log('🚀 Initializing adblock detection...');
+    
+    // Wait for page to fully load before detecting adblock
+    setTimeout(async () => {
+        try {
+            console.log('🔍 Running adblock detection...');
+            const isAdblockActive = await detectAdblock();
+            
+            console.log('📊 Adblock detection result:', isAdblockActive);
+            
+            if (isAdblockActive) {
+                console.log('⚠️ Adblock detected! Checking if warning should be shown...');
+                
+                // Check if user has already dismissed the warning
+                const dismissed = localStorage.getItem('adblockWarningDismissed');
+                const dismissedTime = localStorage.getItem('adblockWarningDismissedTime');
+                const now = Date.now();
+                
+                console.log('Dismissed:', dismissed);
+                console.log('Dismissed time:', dismissedTime);
+                
+                // Always show warning if adblock is detected (removed 24h restriction)
+                console.log('🎯 Showing adblock warning...');
+                showAdblockWarning();
+            } else {
+                console.log('✅ No adblock detected');
+            }
+        } catch (error) {
+            console.error('❌ Adblock detection error:', error);
+        }
+    }, 1000); // Reduced to 1 second for faster detection
+    
+    // Add manual trigger for testing
+    window.testAdblock = async () => {
+        console.log('🧪 Manual adblock test triggered');
+        const result = await detectAdblock();
+        console.log('🧪 Manual test result:', result);
+        if (result) {
+            showAdblockWarning();
+        }
+        return result;
+    };
 }
 
 // Modern adblock warning with improved design
@@ -2533,3 +2600,4 @@ function updateRateLimit() {
 // Make adblock functions globally available
 window.showAdblockConfirmation = showAdblockConfirmation;
 window.hideAdblockConfirmation = hideAdblockConfirmation;
+window.hideAdblockWarning = hideAdblockWarning;
